@@ -56,7 +56,13 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
+        caster_wheel:
+          Value: true
         chassis:
+          Value: true
+        left_wheel:
+          Value: true
+        right_wheel:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -66,6 +72,11 @@ Visualization Manager:
       Tree:
         base_link:
           chassis:
+            caster_wheel:
+              {}
+          left_wheel:
+            {}
+          right_wheel:
             {}
       Update Interval: 0
       Value: true
@@ -91,7 +102,21 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        caster_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         chassis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -186,5 +211,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 1237
-  Y: 250
+  X: 817
+  Y: 239
