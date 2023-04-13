@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <gazebo>
+        <!-- This plugin will publish the joint_states or the selected joints -->
+        <!-- (which robot_state_publisher can then use to broadcast the appropriate tf). -->
+        <!-- Alternatively the ros2_control plugin is better but more complicated -->
+        <!-- the name= is arbitrary -->
+        <!-- filename= is the name of the plugin binary file and is important to get right -->
+        <!-- Note, its on two lines as the name is so long and can wrap -->
+        <plugin name="gazebo_ros_joint_state_publisher"
+            filename="libgazebo_ros_joint_state_publisher.so">
+            <update_rate>20</update_rate>
+
+            <!-- then we list each joint that we want to publish -->
+            <joint_name>left_wheel</joint_name>
+            <joint_name>right_wheel</joint_name>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <!-- This plugin will publish the joint_states or the selected joints -->
+        <!-- (which robot_state_publisher can then use to broadcast the appropriate tf). -->
+        <!-- alternatively the ros2_control plugin is better but more complicated -->
+        <!-- filename= is the name of the plugin binary file and is important to get right -->
+        <!-- Note, its on two lines as the name is so long and can wrap -->
+        <plugin name="gazebo_ros_joint_pose_tragectory"
+            filename="libgazebo_ros_joint_pose_tragectory.so">
+            <update_rate>20</update_rate>
+    </gazebo>
+
+    
+
+
+</robot>

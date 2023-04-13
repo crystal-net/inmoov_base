@@ -19,6 +19,8 @@
         </visual>
     </link>
 
+
+<!-- Right Leg -->
     <link name="right_leg">
         <visual>
             <geometry>
@@ -34,7 +36,12 @@
         <child link="right_leg"/>
         <origin xyz="0 -0.22 0.25"/>
     </joint>
+<!-- Right Leg End -->
 
+
+
+
+<!-- Left Leg -->
     <link name="left_leg">
         <visual>
             <geometry>
@@ -50,5 +57,7 @@
         <child link="left_leg"/>
         <origin xyz="0 0.22 0.25"/>
     </joint>
+<!-- Left Leg End -->
+
 
 </robot>

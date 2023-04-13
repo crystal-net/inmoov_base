@@ -178,6 +178,7 @@
         </xacro:inertial_sphere>
     </link>
 
+    <!-- This is for gazebo and defines the friction co-efficient  -->
     <gazebo reference="caster_wheel">
         <material>Gazebo/Blue</material>
         <mu1 value="0.001" />
