@@ -28,3 +28,21 @@ ros2 launch inmoov_base launch_sim.launch.py world:=./dev_ws/src/inmoov_base/wor
 
 # Launch rViz2 with a launch file
 # https://answers.ros.org/question/374926/ros2-how-to-launch-rviz2-with-config-file/
+
+
+
+
+
+
+
+
+## VSCode Stuff
+# Install vscode-icons
+Press Ctrl-p in vscode
+Enter: ext install vscode-icons-team.vscode-icons
+Activate when prompted
+
+
+
+# Good information on how to setup VSCode even though alot of it pertains to ROS1
+https://erdalpekel.de/
