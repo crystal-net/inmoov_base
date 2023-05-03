@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <!-- this plugin is our *hardware* interface -->
+            <!-- later we will add a gazebo tag for its interface -->
+            <!-- in this case tells ros2_controll how to talk to gazebo -->
+            <!-- as if it was talking to real hardware -->
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <joint name="left_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>                    
+            </command_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="position"/>                
+        </joint>
+
+        <joint name="right_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>                    
+            </command_interface>
+            <state_interface name="velocity"/>
+            <state_interface name="position"/>                
+        </joint>
+    </ros2_control>
+
+
+    <gazebo>
+    <!-- This plugin recieves the cmd_vel from joint_state_publisher and -->
+    <!-- translates them into gazebo movements. -->
+    <!-- name= is not specific.  any identifier is fine -->
+    <!-- filename= is important and is the file name of the plugin -->
+    <!-- In this inst ance we are starting the gazebo_ros2_control plugin -->
+    <!-- when not using gazebo, we will need to run "ros2 run controller_manager ros2_control_node" -->
+    <!-- It contains its own control manager -->
+    <!-- It gets most of its other setup from the robot_state_publisher but not for the ros2_control system -->
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+            <parameters>$(find inmoov_base)/config/controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+
+</robot>
