@@ -1,15 +1,27 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+<!-- This file is going to be used to setup our robot. -->
+<!-- It does not contain any description. -->
+<!-- Description compondents are added as individual includes -->
 
+
+    <!-- This is our robot base and minimum viable description -->
+    <!-- Do NOT comment this include out or we will not have a robot. -->
     <xacro:include filename="robot_core.xacro" />
 
-    <!-- <xacro:include filename="gazebo_control.xacro" /> -->
-
+    <!-- Load the description file for the Lidar.  Can be commented out to disable -->
+    <xacro:include filename="lidar.xacro" />
     
-    <!-- Note that we cannot (I believe use bot gazebo_control and ros2_control at the same time.) -->
+    <!-- Load the description file for the camera.  Can be commented out to disable -->
+    <xacro:include filename="camera.xacro" />
+
+    <!-- Load the control module for Gazebo -->
+    <xacro:include filename="gazebo_control.xacro" />
+
+    <!-- Note that we cannot (I believe) use both gazebo_control and ros2_control at the same time. -->
     <xacro:include filename="ros2_control.xacro" />
 
-    <!-- <xacro:include filename="lidar.xacro" /> -->
+
     
 
 

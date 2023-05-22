@@ -1,3 +1,10 @@
+
+# Current Startup: as of 2023/5/21
+ros2 launch inmoov_base launch_micro_sim.launch.py
+
+
+
+
 # Launch teleop_twist_keyboard
 ros2 run teleop_twist_keyboard teleop_twist_keyboard 
 

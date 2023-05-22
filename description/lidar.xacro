@@ -26,12 +26,12 @@
 
 
 
-    <gazebo reference="laser_frame">
+    <gazebo reference="laser_frame">  <!-- Must mat ch the link name we are going to work on-->
         <material>Gazebo/Red</material>
 
-        <sensor name="laser" type="ray">
-            <pose>0 0 0 0 0 0</pose>
-            <visualize>true</visualize>
+        <sensor name="laser" type="ray">   <!-- The Name here doens't matter but the type MUST be "ray" -->
+            <pose>0 0 0 0 0 0</pose>       <!-- This is the origin in reference to the origin of the link we apply this to. -->
+            <visualize>true</visualize>    <!-- Allows us to turn this on/off with code maybe? -->
             <update_rate>10</update_rate>
             <ray>
                 <scan>
@@ -46,6 +46,8 @@
                     <max>12</max>
                 </range>
             </ray>
+
+            <!--  This section is the executeable plugin for gazebo to allow us to generate test data -->
             <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
                 <ros>
                     <argument>~/out:=scan</argument>
