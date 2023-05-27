@@ -2,7 +2,10 @@
 # Current Startup: as of 2023/5/21
 ros2 launch inmoov_base launch_micro_sim.launch.py
 
+ros2 launch inmoov_base launch_sim.launch.py world:=./src/inmoov_base/worlds/obstacles.world 
 
+# Launch Gazebo with world
+ros2 launch gazebo_ros gazebo.launch.py world:=./src/inmoov_base/worlds/obstacles.world 
 
 
 # Launch teleop_twist_keyboard

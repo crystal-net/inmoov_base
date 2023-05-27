@@ -38,7 +38,6 @@ def generate_launch_description():
                         output='screen')
 
 
-
     # These pertain to our new ros2_controller setup
     # See for more info: https://www.youtube.com/watch?v=4QKsDf1c4hc&t=854s
     diff_drive_spawner = Node(
