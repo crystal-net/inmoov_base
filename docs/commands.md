@@ -1,4 +1,13 @@
 
+# Whenever launching, do the following commands to monitor and see if it works.
+
+ros2 run rqt_console rqt_console
+ros2 node list
+ros2 topic list
+ros2 status
+ros2 interface show rcl interfaces/msg/Log
+ros2 topic echo /rosout             # Logs
+
 # Current Startup: as of 2023/5/21
 ros2 launch inmoov_base launch_micro_sim.launch.py
 
