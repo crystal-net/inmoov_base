@@ -62,7 +62,8 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/di
 
 
 
-
+# Example Publish to an Int32 message topic
+ros2 topic pub --once /int_topic std_msgs/Int32 '{data: "32"}'
 
 
 
@@ -76,3 +77,8 @@ Activate when prompted
 
 # Good information on how to setup VSCode even though alot of it pertains to ROS1
 https://erdalpekel.de/
+
+
+
+# Publish on the /joint_states topic
+ros2 topic pub --once /joint_states sensor_msgs/msg/JointState '{position: [0.0], velocity: [1.0], effort: [0.0]}'
