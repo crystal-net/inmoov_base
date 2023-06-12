@@ -82,3 +82,8 @@ https://erdalpekel.de/
 
 # Publish on the /joint_states topic
 ros2 topic pub --once /joint_states sensor_msgs/msg/JointState '{position: [0.0], velocity: [1.0], effort: [0.0]}'
+
+
+
+# Launch MicroROS Agent
+ros2 run micro_ros_agent micro_ros_agent  serial --dev /dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066FFF515250898367102831-if02 
