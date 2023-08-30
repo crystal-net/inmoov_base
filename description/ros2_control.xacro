@@ -11,6 +11,10 @@
             <plugin>gazebo_ros2_control/GazeboSystem</plugin>
         </hardware>
 
+
+        <!-- We need to define each interface with a ros2_control interface -->
+        <!-- A command_interface is what is going to receive numbers to act upon -->
+        <!-- state_interface is what we can read to see what the current state is -->
         <joint name="left_wheel_joint">
             <command_interface name="velocity">
                 <param name="min">-10</param>
@@ -34,12 +38,15 @@
     <gazebo>
     <!-- This plugin recieves the cmd_vel from joint_state_publisher and -->
     <!-- translates them into gazebo movements. -->
-    <!-- name= is not specific.  any identifier is fine -->
+    <!-- name= is not specific.  any identifier is fine and is arbitrary -->
     <!-- filename= is important and is the file name of the plugin -->
     <!-- In this inst ance we are starting the gazebo_ros2_control plugin -->
     <!-- when not using gazebo, we will need to run "ros2 run controller_manager ros2_control_node" -->
     <!-- It contains its own control manager -->
     <!-- It gets most of its other setup from the robot_state_publisher but not for the ros2_control system -->
+    <!-- It has been noted in video  https://www.youtube.com/watch?v=4QKsDf1c4hc&list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT&index=12 -->
+    <!--   that when not using gazebo, we need to run -->
+    <!--   ros2 run controller_manager ros2_ccontrol_node     Investigate further -->
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
             <parameters>$(find inmoov_base)/config/controllers.yaml</parameters>
         </plugin>

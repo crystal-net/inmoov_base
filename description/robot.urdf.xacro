@@ -16,7 +16,10 @@
     <xacro:include filename="camera.xacro" />
 
     <!-- Load the control module for Gazebo -->
-    <xacro:include filename="gazebo_control.xacro" />
+    <!-- Without this line our robot won't move in gazebo when given commands -->
+    <!-- with ex. teleop_twist_keyboard -->
+    <!-- August 28/23, we are going to disable this for the hardware ros2_control below -->
+    <!-- <xacro:include filename="gazebo_control.xacro" /> -->
 
     <!-- Note that we cannot (I believe) use both gazebo_control and ros2_control at the same time. -->
     <xacro:include filename="ros2_control.xacro" />

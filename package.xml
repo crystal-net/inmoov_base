@@ -12,6 +12,10 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <!-- It was suggested by https://roboticscasual.com/tutorial-ros2-launch-files-all-you-need-to-know/ -->
+  <!--   to add this dependency.  Not sure if it is actually required -->
+  <exec_depend>ros2launch</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>

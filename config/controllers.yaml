@@ -12,9 +12,11 @@ controller_manager:
 diff_cont:
   ros__parameters:
 
-    publish_rate: 50.0
+    # publish_rate: 50.0
+    publish_rate: 5.0
 
-    base_frame_id: base_link
+    base_frame_id: /base_link
+    # base_frame_id: odom
 
     left_wheel_names: ['left_wheel_joint']
     right_wheel_names: ['right_wheel_joint']
@@ -22,6 +24,7 @@ diff_cont:
     wheel_radius: 0.05
 
     use_stamped_vel: false
+    # enable_odom_tf: true
 
   #See https://www.youtube.com/watch?v=4QKsDf1c4hc&t=854 for extra parameters
   #open_loop: false
