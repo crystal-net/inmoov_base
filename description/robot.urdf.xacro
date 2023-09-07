@@ -4,10 +4,32 @@
 <!-- It does not contain any description. -->
 <!-- Description compondents are added as individual includes -->
 
+    <!-- These two parameters state if we are using gazzebo or hardware control -->
+    <!-- I don't believe I can use both -->
+    <xacro:arg name="use_ros2_control" default="true"/>
+    <xacro:arg name="sim_mode" default="false"/>
+
 
     <!-- This is our robot base and minimum viable description -->
     <!-- Do NOT comment this include out or we will not have a robot. -->
     <xacro:include filename="robot_core.xacro" />
+
+
+
+
+
+    <!-- These are to enable ros2control or gazebo control when needed. -->
+    <!-- For now I am going to do it manually.-->
+    <xacro:if value="$(arg use_ros2_control)">
+        <xacro:include filename="ros2_control.xacro" />
+    </xacro:if>
+    <xacro:unless value="$(arg use_ros2_control)">
+        <xacro:include filename="gazebo_control.xacro" />
+    </xacro:unless>
+
+    
+
+
 
     <!-- Load the description file for the Lidar.  Can be commented out to disable -->
     <xacro:include filename="lidar.xacro" />
@@ -15,17 +37,7 @@
     <!-- Load the description file for the camera.  Can be commented out to disable -->
     <xacro:include filename="camera.xacro" />
 
-    <!-- Load the control module for Gazebo -->
-    <!-- Without this line our robot won't move in gazebo when given commands -->
-    <!-- with ex. teleop_twist_keyboard -->
-    <!-- August 28/23, we are going to disable this for the hardware ros2_control below -->
-    <!-- <xacro:include filename="gazebo_control.xacro" /> -->
-
-    <!-- Note that we cannot (I believe) use both gazebo_control and ros2_control at the same time. -->
-    <xacro:include filename="ros2_control.xacro" />
-
-
-    
+    <!-- <xacro:include filename="depth_camera.xacro" /> -->
 
 
 </robot>
