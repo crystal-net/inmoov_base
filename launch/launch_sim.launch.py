@@ -117,8 +117,8 @@ def generate_launch_description():
     # at the top to determine if they will be launched.
     return LaunchDescription([
         rsp,
-        launch_gazebo,
-        # launch_rviz2,
+        # launch_gazebo,
+        launch_rviz2,
         spawn_entity,
         diff_drive_spawner,
         joint_broad_spawner,
