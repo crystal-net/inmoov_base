@@ -3,10 +3,12 @@ controller_manager:
     update_rate: 30
     # use_sim_time: true
 
-    diff_cont:
+    diff_cont:  # name of the controller
       type: diff_drive_controller/DiffDriveController
 
-    joint_broad:
+    # The joint_state_broadcaster doesn't reqire any parameters below.
+    # The function is to broadcast the states of the joints
+    joint_broad:   # name of the controller
       type: joint_state_broadcaster/JointStateBroadcaster
 
 diff_cont:

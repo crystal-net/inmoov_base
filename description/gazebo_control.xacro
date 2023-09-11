@@ -2,23 +2,13 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <gazebo>
-        <!-- This plugin recieves the cmd_vel from joint_state_publisher and -->
-        <!-- translates them into gazebo movements. -->
-        <!-- name= is not specific.  any identifier is fine -->
-        <!-- filename= is important and is the file name of the plugin -->
         <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
 
-            <!-- Each tag here is a parameter for the plugin and relates to our urdf joint names -->
-            <!-- These are specific to a diff drive robot using the diff_drive gazebo plugin -->
-            <!-- More information on this plugin here: -->
-            <!-- https://classic.gazebosim.org/tutorials?tut=ros_gzplugins#RRBotExample -->
-            <!-- https://classic.gazebosim.org/tutorials/browse -->
-
-            <!-- Wheel information -->
+            <!-- Wheel Information -->
             <left_joint>left_wheel_joint</left_joint>
             <right_joint>right_wheel_joint</right_joint>
-            <wheel_separation>0.35</wheel_separation>
-            <wheel_diameter>0.1</wheel_diameter>
+            <wheel_separation>0.297</wheel_separation>
+            <wheel_diameter>0.066</wheel_diameter>
 
 
             <!-- Limits -->
@@ -34,8 +24,8 @@
             <publish_odom_tf>true</publish_odom_tf>
             <publish_wheel_tf>true</publish_wheel_tf>
 
-
         </plugin>
     </gazebo>
-    
+
+
 </robot>

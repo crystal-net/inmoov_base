@@ -2,9 +2,6 @@ import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-# This is a launch file for a physical Lidar (RPLidar A1)
-# More information here: https://www.youtube.com/watch?v=eJZXRncGaGM&list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT&index=10
-
 def generate_launch_description():
 
     return LaunchDescription([
