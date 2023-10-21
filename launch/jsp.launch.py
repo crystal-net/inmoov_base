@@ -41,12 +41,12 @@ def generate_launch_description():
     # use_sim_time is a little confusion here as it is the same name for two different contexts
     # The use_sim_time on the left is the ros2 parameter vs the right which holds a variable of true or false 
     # params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
-    params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
+    params = {'robot_description': robot_description_config}
     
     
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
+    node_joint_state_publisher = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
         output='screen',
         parameters=[params]
     )
@@ -54,17 +54,17 @@ def generate_launch_description():
 
     # Launch!
     return LaunchDescription([
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use sim time if true'),
-        DeclareLaunchArgument(
-            'use_ros2_control',
-            default_value='true',
-            description='Use ros2_control if true'),
+        # DeclareLaunchArgument(
+        #     'use_sim_time',
+        #     default_value='false',
+        #     description='Use sim time if true'),
+        # DeclareLaunchArgument(
+        #     'use_ros2_control',
+        #     default_value='true',
+        #     description='Use ros2_control if true'),
 
-        node_robot_state_publisher
+        node_joint_state_publisher
     ])
 
 
-# Next, launch jsp.launch.py
+# Next, launch gazebo.launch.py
