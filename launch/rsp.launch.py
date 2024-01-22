@@ -41,7 +41,7 @@ def generate_launch_description():
     # use_sim_time is a little confusion here as it is the same name for two different contexts
     # The use_sim_time on the left is the ros2 parameter vs the right which holds a variable of true or false 
     # params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
-    params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
+    params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time, 'rate': "100"}
     
     
     node_robot_state_publisher = Node(
