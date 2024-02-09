@@ -1,3 +1,10 @@
+# This is our all-in-one launch file.  It will launch:
+#   robot_state_publisher
+#   joint_state_publisher
+#   ros2_controller
+#   micro_ros_agent (eventually)
+
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -20,7 +27,8 @@ def generate_launch_description():
     # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
 
-    package_name='articubot_one' #<--- CHANGE ME
+    # package_name='articubot_one' #<--- CHANGE ME
+    package_name='inmoov_base' #<--- CHANGE ME
 
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -47,6 +55,10 @@ def generate_launch_description():
 
 
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
+
+
+    # Launch the ros2_control manager.  Only needed if not using ros.
+    # First we build a variable and set our control description yaml file.
 
     controller_params_file = os.path.join(get_package_share_directory(package_name),'config','my_controllers.yaml')
 

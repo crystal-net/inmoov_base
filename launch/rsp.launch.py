@@ -1,3 +1,6 @@
+# This file only launches the robot_state_publisher.  
+# In order the launch the complete robot you need to run the launch_robot package.
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -53,6 +56,9 @@ def generate_launch_description():
 
 
     # Launch!
+    # TODO Somewhere in here we can set to get colored terminal logging output
+    # Not sure how exactly.  See https://github.com/ros2/ros2/issues/1048
+    
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
@@ -63,7 +69,7 @@ def generate_launch_description():
             default_value='true',
             description='Use ros2_control if true'),
 
-        node_robot_state_publisher
+        node_robot_state_publisher,
     ])
 
 
