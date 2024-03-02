@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-02-28T04:15:17.374Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="o-d8zLHoPikyCNHWeqYO" version="23.1.5" type="device">
+<mxfile host="Electron" modified="2024-03-02T21:01:36.628Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="YDF2xyxhLNvgA2GTopko" version="23.1.5" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2899" dy="1243" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="2033" dy="874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -449,8 +449,54 @@
             <mxPoint x="20" y="680" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="fPOZ1dp4cMhDRdokMYRC-129" value="&lt;h1&gt;ROS2 Control for Gazebo&lt;/h1&gt;&lt;div&gt;&amp;nbsp;This is where we are going to setup how ros2_control talks to gazebo and how gazebo talks to res2_control&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;NOTE&lt;/b&gt;&amp;nbsp;gazebo_control and gazebo_ros2_control are two different things&lt;/div&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="fPOZ1dp4cMhDRdokMYRC-129" value="&lt;h1&gt;ROS2 Control for Gazebo&lt;/h1&gt;&lt;div&gt;&amp;nbsp;This is where we are going to setup how ros2_control talks to gazebo and how gazebo talks to res2_control&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;NOTE&lt;/b&gt;&amp;nbsp;gazebo_control and gazebo_ros2_control are two different things&lt;/div&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1005" y="1210" width="465" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-129" value="&lt;h1&gt;Robot State Publisher&lt;/h1&gt;This package contains the Robot State Publisher, a node and a class to publish the state of a robot to tf2.&lt;br&gt;At startup time, Robot State Publisher is supplied with a kinematic tree model (URDF) of the robot.&lt;br&gt;It then subscribes to the &lt;code&gt;joint_states&lt;/code&gt; topic (of type &lt;code&gt;sensor_msgs/msg/JointState&lt;/code&gt;) to get individual joint states.&lt;br&gt;These joint states are used to update the kinematic tree model, and the resulting 3D poses are then published to tf2.&lt;br&gt;More Info:&amp;nbsp;&lt;a href=&quot;https://github.com/ros/robot_state_publisher&quot;&gt;https://github.com/ros/robot_state_publisher&lt;/a&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-825" y="2250" width="770" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-142" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fdtKl7H0yg4s_9Us0zCq-130" target="fdtKl7H0yg4s_9Us0zCq-134">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-143" value="robot_state_publisher subscribes to /joint_states&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="fdtKl7H0yg4s_9Us0zCq-142">
+          <mxGeometry x="-0.2451" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-130" value="/joint_states" style="rounded=1;whiteSpace=wrap;html=1;direction=west;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-625" y="2670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-136" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fdtKl7H0yg4s_9Us0zCq-131" target="fdtKl7H0yg4s_9Us0zCq-135">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-131" value="fixed joint" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-790" y="2458" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-132" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-210" y="2840" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-138" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fdtKl7H0yg4s_9Us0zCq-133" target="fdtKl7H0yg4s_9Us0zCq-137">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-133" value="moveable joint" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-790" y="2560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-134" value="robot_state_publisher" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-625" y="2840" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-135" value="/tf_static" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-590" y="2458" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-137" value="/tf" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-590" y="2560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-140" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fdtKl7H0yg4s_9Us0zCq-141" target="fdtKl7H0yg4s_9Us0zCq-134">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-712" y="2870.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fdtKl7H0yg4s_9Us0zCq-141" value="kinematic tree model&lt;br&gt;(URDF)" style="shape=ext;double=1;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-780" y="2830" width="80" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
