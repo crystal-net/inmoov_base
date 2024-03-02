@@ -9,52 +9,64 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 
-
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command
+from launch.substitutions import LaunchConfiguration, Command
 from launch.actions import RegisterEventHandler
 from launch.event_handlers import OnProcessStart
 
 from launch_ros.actions import Node
-
-
+import xacro
 
 def generate_launch_description():
 
 
-    # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
+
+    # Include the robot_state_publisher launch file, provided by our own package. 
+    # Force sim time to be enabled
+
+   
+    # We set a package_name to be used for string replacement later in the launch file.
+    # It would be advisable to ensure that this is the same as the build directory.
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
+    # See the standard package directory structure for details
+    package_name='inmoov_base'
+    use_sim_time = LaunchConfiguration('use_sim_time')
 
-    # package_name='articubot_one' #<--- CHANGE ME
-    package_name='inmoov_base' #<--- CHANGE ME
+    # Process the URDF file
+    # pkg_path = os.path.join(get_package_share_directory(package_name))
+    # xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
+    # robot_description_config = xacro.process_file(xacro_file)
 
-    rsp = IncludeLaunchDescription(
+    print ('\033[92m' + "loading", package_name, '\033[0m')
+
+
+    # Create a launch description object.  
+    # It will be referenced at the bottom of this file.
+    # the launch_arguments are defined at the entry point xacro file 'robot.urdf.xacro'
+    robot_state_publisher = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
                 )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
     )
 
-    # joystick = IncludeLaunchDescription(
-    #             PythonLaunchDescriptionSource([os.path.join(
-    #                 get_package_share_directory(package_name),'launch','joystick.launch.py'
-    #             )])
-    # )
-
-
-    twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
-    twist_mux = Node(
-            package="twist_mux",
-            executable="twist_mux",
-            parameters=[twist_mux_params],
-            remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
-        )
-
-    
-
+    pkg_path = os.path.join(get_package_share_directory('inmoov_base'))
+    xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
 
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
+    robot_description_config = Command(['xacro ', xacro_file])
+
+    params = {'robot_description': robot_description_config,
+              'use_sim_time': use_sim_time,
+              'rate': "100"}
+
+    node_joint_state_publisher_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        output='screen',
+        parameters=[params]
+    )
 
 
     # Launch the ros2_control manager.  Only needed if not using ros.
@@ -98,6 +110,23 @@ def generate_launch_description():
     )
 
 
+    # joystick = IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource([os.path.join(
+    #                 get_package_share_directory(package_name),'launch','joystick.launch.py'
+    #             )])
+    # )
+
+
+    # twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
+    # twist_mux = Node(
+    #         package="twist_mux",
+    #         executable="twist_mux",
+    #         parameters=[twist_mux_params],
+    #         remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
+    #     )
+
+
+
     # Code for delaying a node (I haven't tested how effective it is)
     # 
     # First add the below lines to imports
@@ -118,10 +147,11 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
-        rsp,
+        robot_state_publisher,
+        node_joint_state_publisher_gui,
         # joystick,
-        twist_mux,
-        delayed_controller_manager,
-        delayed_diff_drive_spawner,
-        delayed_joint_broad_spawner
+        # twist_mux,
+        # delayed_controller_manager,
+        # delayed_diff_drive_spawner,
+        # delayed_joint_broad_spawner
     ])
