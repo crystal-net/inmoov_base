@@ -1,6 +1,3 @@
-# This file only launches the robot_state_publisher.  
-# In order the launch the complete robot you need to run the launch_robot package.
-
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -13,46 +10,20 @@ from launch_ros.actions import Node
 import xacro
 
 
-
 def generate_launch_description():
 
-    # Build an object of type LaunchConfiguration.  I don't know how this is supposed to work.
+    # Check if we're told to use sim time
     use_sim_time = LaunchConfiguration('use_sim_time')
-    # use_ros2_control = LaunchConfiguration('use_ros2_control')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
-    # Now lets build the path to our URDF description.  These are split up so that one portion of the
-    # the path can be changed or defined without modifying the rest.
-
-    # First we get the root path of the project directory
-    # pkg_path = os.path.join(get_package_share_directory('articubot_one'))
-    pkg_path = os.path.join(get_package_share_directory('inmoov_base'))
-    
-    # Next we append the sub-directory path to the URDF.XACRO itself
+    # Process the URDF file
+    pkg_path = os.path.join(get_package_share_directory('articubot_one'))
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
-
-    # Lastly we build a raw URDF out of the xacro file and store the contents
-    # It is not a URDF file per se but the contents had we actually created one.
-    robot_description_config = Command(['xacro ', xacro_file])
-
-    # And lastly we build the list of our final parameters for launching,
-    # These are as if we passed them as parameters on the commandline.
-    # There is also --ros-args but these are different
-    params = {'robot_description': robot_description_config,
-              'use_sim_time': use_sim_time,
-              'rate': "100"}
-
-    # This is other setup information that I don't think we need as we are using DeclareLaunchArguement below
     # robot_description_config = xacro.process_file(xacro_file).toxml()
-    # robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
-    # robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control])
+    robot_description_config = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
     
-    # use_sim_time is a little confusion here as it is the same name for two different contexts
-    # The use_sim_time on the left is the ros2 parameter vs the right which holds a variable of true or false 
-    # params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
-    
-    
-    # ------------------------------------------------------------
-
+    # Create a robot_state_publisher node
+    params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -62,9 +33,6 @@ def generate_launch_description():
 
 
     # Launch!
-    # TODO Somewhere in here we can set to get colored terminal logging output
-    # Not sure how exactly.  See https://github.com/ros2/ros2/issues/1048
-    
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
@@ -75,8 +43,5 @@ def generate_launch_description():
             default_value='true',
             description='Use ros2_control if true'),
 
-        node_robot_state_publisher,
+        node_robot_state_publisher
     ])
-
-
-# Next, launch jsp.launch.py

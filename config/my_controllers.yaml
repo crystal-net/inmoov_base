@@ -1,20 +1,18 @@
 controller_manager:
   ros__parameters:
-    update_rate: 100
+    update_rate: 30
     # use_sim_time: true
 
-    diff_cont:  # name of the controller
+    diff_cont:
       type: diff_drive_controller/DiffDriveController
 
-    # The joint_state_broadcaster doesn't reqire any parameters below.
-    # The function is to broadcast the states of the joints
-    joint_broad:   # name of the controller
+    joint_broad:
       type: joint_state_broadcaster/JointStateBroadcaster
 
 diff_cont:
   ros__parameters:
 
-    publish_rate: 15.0
+    publish_rate: 50.0
 
     base_frame_id: base_link
 

@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-
-    <!-- The very first tag is here to make it easy to change if we are using -->
-    <!-- gazebo_ros2_control in sim_mode or we are going IRL using ros2_control -->
-    <!-- xacro:unless is like an if statement.  The logic is a bit wierd. -->
-    <!-- Basically we are saying that if sim_mode is true then we use this block -->
-    <!-- Otherwise jup to the xacro:if to run that. -->
     <xacro:unless value="$(arg sim_mode)">
         <ros2_control name="RealRobot" type="system">
             <hardware>
@@ -62,13 +56,10 @@
         </ros2_control>
     </xacro:if>
 
-    <!-- This plugin sets up Gazebo and as well it includes a controller manager so we don't have to start our own. -->
-    <!-- When NOT using Gazebo.  We will need to run $ros2 run controller_manager ros2_control_node  See HERE for more -->
-    <!-- The control plugin with use the parameters to load the YAML file that contains the controller characteristics. -->
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find inmoov_base)/config/gazebo_controllers.yaml</parameters>
-            <parameters>$(find inmoov_base)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
+            <parameters>$(find articubot_one)/config/my_controllers.yaml</parameters>
+            <parameters>$(find articubot_one)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
         </plugin>
     </gazebo>
 
