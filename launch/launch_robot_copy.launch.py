@@ -28,6 +28,10 @@ from launch.actions import TimerAction  #For launching delayed processes
 from launch_ros.actions import Node  # Allows for launching cpp nodes from python launch files
 # from launch_ros.substitutions import  #String substitution for ROS to find our URDF
 
+# Just a note about colored print statements
+#    print ('\033[92m' + package_name, '\033[0m')
+
+
 
 def generate_launch_description():
     # pdb.set_trace()  #Python debug break if needed
@@ -37,19 +41,24 @@ def generate_launch_description():
     # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
     # See the standard package directory structure for details
     package_name='inmoov_base'
-    print ('\033[92m' + package_name, '\033[0m')
 
     pkg_path = os.path.join(get_package_share_directory('inmoov_base'))
-    print ('\033[92m' + pkg_path, '\033[0m')
 
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
-    print ('\033[92m' + xacro_file, '\033[0m')
 
+
+    ################# Robot Description ########################
+    # In the scope of the current launch file (this may have been launched
+    # individually or via rsp.launch.py), we need to load the robot description
+    # into a variable again to use for more launch functions.
+    # The object below loads teh current robot_description from ROS2
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
-    # print ('\033[92m' + robot_description, '\033[0m')
 
+    # As oposed to this line that loads a brand new variable via the xacro file on disk
+    # The potential problem with this is that any on the fly
+    # modifications will not be available.
     robot_description_config = Command(['xacro ', xacro_file])
-    # print ('\033[92m' + robot_description_config, '\033[0m')
+
 
     # use_sim_time = 'true'
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -61,7 +70,6 @@ def generate_launch_description():
     # xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
     # robot_description_config = xacro.process_file(xacro_file)
 
-    print ('\033[92m' + "loading", package_name, '\033[0m')
     
     # Include the robot_state_publisher launch file, provided by our own package. 
     # Force sim time to be enabled
@@ -71,13 +79,13 @@ def generate_launch_description():
     # Rudimentary tutorial on including other launch files is here: https://www.youtube.com/watch?v=sl0exwcg3o8
     # A better tutorial page is here with more advance examples: https://roboticscasual.com/tutorial-ros2-launch-files-all-you-need-to-know/
     # Official documentation for including launch files is here: https://docs.ros.org/en/iron/Tutorials/Intermediate/Launch/Using-Substitutions.html#create-and-setup-the-package
-    print ('\033[92m' + "Starting robot_state_publisher", '\033[0m')
     robot_state_publisher = IncludeLaunchDescription(
                                 PythonLaunchDescriptionSource(
                                     [os.path.join(
                                         get_package_share_directory(package_name),'launch','rsp.launch.py'
                                     )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'false'}.items()
     )   
+
 
     # I think this list is broken because why do I need a robot description.
     # It seems to load it just fine without specifying it here.
@@ -88,7 +96,6 @@ def generate_launch_description():
     joint_state_publisher_params = {'use_sim_time': True,
                                     'rate': 100}
 
-    print ('\033[92m' + "Starting node_joint_state_publisher_gui", '\033[0m')
     node_joint_state_publisher_gui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
@@ -109,7 +116,6 @@ def generate_launch_description():
     # Launch the ros2_control manager.  Only needed if not using ros.
     # First we build a variable and set our control description yaml file.
 
-    print ('\033[92m' + "Starting ros2_control Controller Manager node", '\033[0m')
     controller_params_file = os.path.join(get_package_share_directory(package_name),'config','my_controllers.yaml')
 
     controller_manager = Node(
