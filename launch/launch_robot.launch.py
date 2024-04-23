@@ -47,17 +47,6 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
 
 
-    ################# Robot Description ########################
-    # In the scope of the current launch file (this may have been launched
-    # individually or via rsp.launch.py), we need to load the robot description
-    # into a variable again to use for more launch functions.
-    # The object below loads teh current robot_description from ROS2
-    robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
-
-    # As oposed to this line that loads a brand new variable via the xacro file on disk
-    # The potential problem with this is that any on the fly
-    # modifications will not be available.
-    robot_description_config = Command(['xacro ', xacro_file])
 
 
     # use_sim_time = 'true'
@@ -87,6 +76,7 @@ def generate_launch_description():
     )   
 
 
+
     # I think this list is broken because why do I need a robot description.
     # It seems to load it just fine without specifying it here.
     # params = {'robot_description': robot_description_config,
@@ -110,6 +100,18 @@ def generate_launch_description():
         arguments=[],
     )
 
+    ################# Robot Description ########################
+    # In the scope of the current launch file (this may have been launched
+    # individually or via rsp.launch.py), we need to load the robot description
+    # into a variable again to use for more launch functions.
+    # The object below loads teh current robot_description from ROS2
+    robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
+
+    # As oposed to this line that loads a brand new variable via the xacro file on disk
+    # The potential problem with this is that any on the fly
+    # modifications will not be available.
+    robot_description_config = Command(['xacro ', xacro_file])
+
 
 
 
@@ -127,11 +129,11 @@ def generate_launch_description():
 
     # delayed_controller_manager = TimerAction(period=3.0, actions=[controller_manager])
 
-    # diff_drive_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner.py",
-    #     arguments=["diff_cont"],
-    # )
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner.py",
+        arguments=["diff_cont"],
+    )
 
     delayed_diff_drive_spawner = RegisterEventHandler(
         event_handler=OnProcessStart(
