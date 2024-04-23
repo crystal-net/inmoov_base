@@ -1,8 +1,17 @@
+# Further details into the ROS2 launch file is here: https://design.ros2.org/articles/roslaunch.html
+# For which parameters are also important: http://design.ros2.org/articles/ros_parameters.html
+# And node lifecycle: http://design.ros2.org/articles/node_lifecycle.html
+
 # This is our all-in-one launch file.  It will launch:
 #   robot_state_publisher
 #   joint_state_publisher
 #   ros2_controller
 #   micro_ros_agent (eventually)
+
+
+# TODO: Update the launcher to be more event driven.  This will require a bunch more import packages
+# See here for more info:  https://docs.ros.org/en/rolling/Tutorials/Intermediate/Launch/Using-Event-Handlers.html
+
 
 import pdb
 import os
@@ -35,31 +44,60 @@ from launch_ros.actions import Node  # Allows for launching cpp nodes from pytho
 
 def generate_launch_description():
     # pdb.set_trace()  #Python debug break if needed
-   
-    # We set a package_name to be used for string replacement later in the launch file.
-    # It would be advisable to ensure that this is the same as the build directory.
-    # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
-    # See the standard package directory structure for details
+
+    # ****** Package Path ****** #
+    # First we are going to set a bunch of environment variables.  We are going to set
+    # them immediately at the top of the launch file to make it easier to find and
+    # change when we build a new project or we want to change something.
+    # 
+    # package_name: is to be used for string replacement and it needs to be the same as
+    # the build directory in.  **See the standard package directory structure for details
     package_name='inmoov_base'
 
-    pkg_path = os.path.join(get_package_share_directory('inmoov_base'))
+    # Next we use the package_name variable we just set to build out the whole directory
+    # get_package_share_directory is a function imported from ament_index_python.packages
+    pkg_path = os.path.join(get_package_share_directory(package_name))
 
+    # Now that we have the entire path to our project saved in 'pkg_path' now we
+    # can create a path to our core robot description file.  All other URDF files are
+    # linked to this core file.  Making this a variable means we can pretty easily
+    # change WHICH robot we are launching.
+    # TODO: Decide if this needs to be a runtime cmd-line launch argument
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
 
 
 
 
+    # Convert the XACRO file into straight URDF and store that into a description variable
+    # There seems to be two different ways of doing this.
+    # I believe the commented line is the old way.  I left it here for reference.
+    # robot_description_config = Command(['xacro ', xacro_file])
+    robot_description_config = xacro.process_file(xacro_file)
+
+
+    # ***** Runtime Variables ****** #
+    # If we are using gazebo we need to enable 'use_sim_time'.  We may be able to
+    # remove this from the launch configuration and configure it in the xacro.
     # use_sim_time = 'true'
     use_sim_time = LaunchConfiguration('use_sim_time')
+    rate = LaunchConfiguration('100')
     # print ('\033[92m' + use_sim_time, '\033[0m')
 
 
-    # Process the URDF file
-    # pkg_path = os.path.join(get_package_share_directory(package_name))
-    # xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
-    # robot_description_config = xacro.process_file(xacro_file)
+
+    # ***** Node Parameters ****** 
+    # joint_state_publisher_params = {use_sim_time, 'rate': 100}
+    # {'robot_description': robot_description_config,}
+    joint_state_publisher_params = {'use_sim_time': True, 'rate': 100}
+    
+    # rViz2 arguements.  They don't seem to work so they are applied manually below in the node definition.
+    # I believe they are arguments as oposed to params because it is an executable not a python launch file
+    # rviz2_args = {'-d ' + pkg_path + 'config' + 'config_file.rviz'}
+    #rviz2_args = {'-d', [os.path.join(pkg_path, 'config', 'config_file.rviz')]}
 
     
+
+    # ****** Node Definition ****** #
     # Include the robot_state_publisher launch file, provided by our own package. 
     # Force sim time to be enabled
     # Create a launch description object.  
@@ -75,29 +113,29 @@ def generate_launch_description():
                                     )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'false'}.items()
     )   
 
-
-
-    # I think this list is broken because why do I need a robot description.
-    # It seems to load it just fine without specifying it here.
-    # params = {'robot_description': robot_description_config,
-    #           'use_sim_time': use_sim_time,
-    #           'rate': "100"}
-
-    joint_state_publisher_params = {'use_sim_time': True,
-                                    'rate': 100}
-
+    # Joint State Publisher.  This provides us with a little GUI where we can change and publish
+    # values to the /joint_state topic.  This ultimately isn't the right way to do this.
+    # Right now I am moving the sliders which it publishes and microros is reading those values
+    # repeatedly and moving the servos.  However I think it is proper for ros2_control to publish
+    # these values and then I won't need this later.
     node_joint_state_publisher_gui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         output='screen',
         parameters=[joint_state_publisher_params]
-        # parameters=[{'rate': 100,'use_sim_time': True}]
+        # parameters=[use_sim_time]
     )
 
-    rviz_node = Node(
+    # Launching rViz2.  For some reason, I can't set the config arguements above.  
+    # TODO: This needs to be an arguement variable or a YAML file.
+    rviz2_node = Node(
         package="rviz2",
+        # namespace='',
         executable="rviz2",
-        arguments=[],
+        name='rviz2',
+        arguments=['-d', [os.path.join(get_package_share_directory(package_name), 'config', 'default.rviz')]]
+        # arguments=['-d', [os.path.join(pkg_path, 'config', 'config_file.rviz')]]
+
     )
 
     ################# Robot Description ########################
@@ -110,12 +148,13 @@ def generate_launch_description():
     # As oposed to this line that loads a brand new variable via the xacro file on disk
     # The potential problem with this is that any on the fly
     # modifications will not be available.
-    robot_description_config = Command(['xacro ', xacro_file])
+    # I actually think this is giving me a warning when the launcher runs.
 
 
 
 
-    # Launch the ros2_control manager.  Only needed if not using ros.
+
+    # Launch the ros2_control manager.  Only needed if not using .......
     # First we build a variable and set our control description yaml file.
 
     controller_params_file = os.path.join(get_package_share_directory(package_name),'config','my_controllers.yaml')
@@ -195,9 +234,9 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher,
         node_joint_state_publisher_gui,
-        controller_manager,
-        joystick,
-        rviz_node,
+        # controller_manager,
+        # joystick,
+        rviz2_node,
         # diff_drive_spawner,
         # twist_mux,
         # delayed_controller_manager,
