@@ -31,7 +31,7 @@ def generate_launch_description():
     # Create a robot_state_publisher node
     # We have to create a new variable object that has the exploded parameter list created by
     # the xacro command and the other parameters above
-    params = {'robot_description': robot_description_config}
+    params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time, 'use_ros2_control': use_ros2_control}
     
     
     
@@ -54,7 +54,7 @@ def generate_launch_description():
     return LaunchDescription([
     DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value='true',
         description='Use sim time if true'),
     DeclareLaunchArgument(
         'use_ros2_control',
