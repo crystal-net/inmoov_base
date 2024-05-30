@@ -126,13 +126,21 @@ def generate_launch_description():
     # Right now I am moving the sliders which it publishes and microros is reading those values
     # repeatedly and moving the servos.  However I think it is proper for ros2_control to publish
     # these values and then I won't need this later.
-    node_joint_state_publisher_gui = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        output='screen',
-        parameters=[joint_state_publisher_params]
+    # node_joint_state_publisher_gui = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     output='screen',
+    #     parameters=[joint_state_publisher_params]
         # parameters=[use_sim_time]
-    )
+    # )
+    joint_state_publisher = IncludeLaunchDescription(
+                                PythonLaunchDescriptionSource(
+                                    [os.path.join(
+                                        get_package_share_directory(package_name),'launch','rsp.launch.py'
+                                    )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'false'}.items()
+    )   
+
+
 
     # Launching rViz2.  For some reason, I can't set the config arguements above.  
     # TODO: This needs to be an arguement variable or a YAML file.
@@ -141,7 +149,7 @@ def generate_launch_description():
         # namespace='',
         executable="rviz2",
         name='rviz2',
-        arguments=['-d', [os.path.join(get_package_share_directory(package_name), 'config', 'drive_bot.rviz')]]
+        arguments=['-d', [os.path.join(get_package_share_directory(package_name), 'config', 'default.rviz')]]
         # arguments=['-d', [os.path.join(pkg_path, 'config', 'config_file.rviz')]]
 
     )
@@ -245,7 +253,7 @@ def generate_launch_description():
         
         
 
-        controller_manager,
+        # controller_manager,
         # delayed_controller_manager,
 
         # diff_drive_spawner,
@@ -256,5 +264,5 @@ def generate_launch_description():
 
         # twist_mux,
         # joystick,
-        rviz2_node,
+        # rviz2_node,
     ])
