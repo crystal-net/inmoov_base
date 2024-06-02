@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<sdf version ="1.7">
+    <world name='inmoov_world'>
+    <!-- Built using the tutorial here: https://www.youtube.com/watch?v=48TX-XJ14Gs&list=PL6FI-gIL5jiEd4Hv-NIAuO2Cbbs27UpAM -->
+        <!-- 1ms just gives it a tag for this group of settings -->
+        <!-- type= specifies the physics engine that is not currently supported so we ignore -->
+        <!-- max_step_size is the time in seconds (0.001 = 1ms) at which the world and its interactions are updated -->
+        <!-- real_time_factor is relation to real time so 2.0 would be twice as fast as real time? -->
+        <physics name="1ms" type="ignored">
+            <max_step_size>0.001</max_step_size>
+            <real_time_factor>1.0</real_time_factor>
+        </physics>
+
+
+        <!-- This load the physics system for friction, gravity, etc. -->
+        <plugin
+            filename="libignition-gazebo-physics-system.so"
+            name="ignition::gazebo::systems::Physics">
+        </plugin>
+
+        <!-- This is responsible for user interaction in the simulation -->
+        <plugin
+            filename="libignition-gazebo-user-commands-system.so"
+            name="ignition::gazebo::systems::UserCommands">
+        </plugin>
+
+        <!-- Shows our world or something? -->
+        <plugin
+            filename="libignition-gazebo-scene-broadcaster-system.so"
+            name="ignition::gazebo::systems::SceneBroadcaster">
+        </plugin>
+
+        
+        <!-- Now to configure our gazebo interface -->
+        <!-- 3D scene control -->
+        <gui fullscreen="0">
+            <plugin filename="GzScene3D" name="3D View">
+                <ignition-gui>
+                    <title>3D View</title>
+                    <property type="bool" key="showTitleBar">false</property>
+                    <property type="string" key="state">docked</property>
+                </ignition-gui>
+
+                <engine>ogre2</engine>
+                <scene>scene</scene>
+                <ambient_light>0.4 0.4 0.4</ambient_light>
+                <background_color>0.8 0.8 0.8</background_color>
+            </plugin>
+
+            <!-- World control -->
+            <plugin filename="WorldControl" name="World Control">
+                <ignition-gui>
+                    <title>World Control</title>
+                    <property type="bool" key="showTitleBar">false</property>
+                    <property type="bool" key="resizable">false</property>
+                    <property type="double" key="height">72</property>
+                    <property type="double" key="width">121</property>
+                    <property type="double" key="z">1</property>
+                    
+                    <property type="string" key="state">floating</property>
+                    <anchors target="3D View">
+                        <line own="left" target="left"/>
+                        <line own="bottom" target="bottom"/>
+                    </anchors>
+                </ignition-gui>
+
+                <play_pause>true</play_pause>
+                <step>true</step>
+                <start_paused>true</start_paused>
+                <service>/world/world_demo/control</service>
+                <stats_topic>/world/world_demo/stats</stats_topic>
+            </plugin>            
+            <!-- world stats -->
+
+                     
+            <plugin filename="WorldStats" name="World Stats">
+                <ignition-gui>
+                    <title>World Stats</title>
+                    <property type="bool" key="showTitleBar">false</property>
+                    <property type="bool" key="resizable">false</property>
+                    <property type="double" key="height">110</property>
+                    <property type="double" key="width">290</property>
+                    <property type="double" key="z">1</property>
+                    
+                    <property type="string" key="state">floating</property>
+                    <anchors target="3D View">
+                        <line own="right" target="right"/>
+                        <line own="bottom" target="bottom"/>
+                    </anchors>
+                </ignition-gui>
+
+                <sim_time>true</sim_time>
+                <real_time>true</real_time>
+                <real_time_factor>true</real_time_factor>
+                <iteractions>true</iteractions>
+                <topic>/world/world_demo/stats</topic>
+
+            </plugin>            
+
+        <!-- End GUI definition -->
+        </gui>
+
+
+    </world>
+</sdf>

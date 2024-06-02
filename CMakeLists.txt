@@ -11,15 +11,29 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
+# Check if the compiler being used is GNU's C++ compiler (g++) or Clang.
+# Add compiler flags for all targets that will be defined later in the 
+# CMakeLists file. These flags enable extra warnings to help catch
+# potential issues in the code.
+# Add options to the compilation process
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Locate and configure packages required by the project.
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(std_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+add_executable(talker src/minimal_cpp_publisher.cpp)
+add_executable(listener src/minimal_cpp_subscriber.cpp)
+ament_target_dependencies(talker rclcpp std_msgs)
+ament_target_dependencies(listener rclcpp std_msgs)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -37,5 +51,10 @@ install(
   DIRECTORY config description launch worlds
   DESTINATION share/${PROJECT_NAME}
 )
+
+install(TARGETS
+  talker
+  listener
+  DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
