@@ -12,15 +12,18 @@ from launch_ros.substitutions import FindPackageShare
  
 def generate_launch_description():
  
-    # Define filenames    
-    urdf_package = 'inmoov_base'
+    # Define constants for filenames and subfolders below the parent package path   
+    package_name = 'inmoov_base'
+    urdf_folder = 'description'
     urdf_filename = 'robot.urdf.xacro'
+    rviz_config_folder = 'config/rviz'
     rviz_config_filename = 'drive_bot.rviz'
+
  
     # Set paths to important files
-    pkg_share_description = FindPackageShare(urdf_package)
-    default_urdf_model_path = PathJoinSubstitution([pkg_share_description, 'description', urdf_filename])
-    default_rviz_config_path = PathJoinSubstitution([pkg_share_description, 'config', rviz_config_filename])
+    pkg_share_description = FindPackageShare(package_name)
+    default_urdf_model_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
+    default_rviz_config_path = PathJoinSubstitution([pkg_share_description, rviz_config_folder, rviz_config_filename])
  
     # Launch configuration variables specific to simulation
     jsp_gui = LaunchConfiguration('jsp_gui')

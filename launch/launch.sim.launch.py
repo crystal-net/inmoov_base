@@ -6,68 +6,38 @@ from launch import LaunchDescription
 from launch.actions import AppendEnvironmentVariable, DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration, PythonExpression, PathJoinSubstitution
+from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
-
-
-
-
-  ####################################################
-  # Configuration Definitions                        #
-  # Make changes to startup here                     #
-  #                                                  #
-  ####################################################
-
 def generate_launch_description():
 
+  # Constants for paths to different files and folders
+  package_name_description = 'inmoov_base'
+  package_name_gazebo = 'inmoov_base'
 
-  # Define constants for filenames and subfolders below the parent package path    
-  package_name = 'inmoov_base'
   default_robot_name = 'inmoov'
-
-
-  urdf_folder = 'description'
-  urdf_filename = 'robot.urdf.xacro'
-
-  rviz_package_name = 'ros_rviz2'  #Dont' know if this is even right.  Not currently using it anyways
-  rviz_config_folder = 'config/rviz'
-  rviz_config_filename = 'drive_bot.rviz'  #Example: '/mycobot_280_arduino_view_description.rviz'
-
-  # package_name_gazebo = 'inmoov_base'
-  gazebo_package_name = 'ros_gz_sim' #This allows changing from classic, ignition, or gz
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models'
-  gazebo_config_file = 'ros_gz_bridge.yaml'
-  gazebo_config_folder = 'config/gz'
-  gazebo_world_file = 'empty.world'    # e.g. 'world/empty.world', 'world/house.world'
-  gazebo_default_world_path = 'worlds'
+  ros_gz_bridge_config_file_path = 'config/ros_gz_bridge.yaml'
+  rviz_config_file_path = 'rviz/mycobot_280_arduino_view_description.rviz'
+  urdf_file_path = 'urdf/mycobot_280_gazebo.urdf.xacro' 
+  world_file_path = 'worlds/empty.world' # e.g. 'world/empty.world', 'world/house.world'
+
+  # Set the path to different files and folders.  
+  pkg_ros_gz_sim = FindPackageShare(package='ros_gz_sim').find('ros_gz_sim')  
+  pkg_share_description = FindPackageShare(package=package_name_description).find(package_name_description)
+  pkg_share_gazebo = FindPackageShare(package=package_name_gazebo).find(package_name_gazebo)
+
+  default_ros_gz_bridge_config_file_path = os.path.join(pkg_share_gazebo, ros_gz_bridge_config_file_path)
+  default_rviz_config_path = os.path.join(pkg_share_description, rviz_config_file_path)  
+  default_urdf_model_path = os.path.join(pkg_share_gazebo, urdf_file_path)
+  gazebo_launch_file_path = os.path.join(pkg_share_gazebo, gazebo_launch_file_path)   
+  gazebo_models_path = os.path.join(pkg_share_gazebo, gazebo_models_path)
+  world_path = os.path.join(pkg_share_gazebo, world_file_path)
   
-
-  # Build paths to important files using the variables set above
-  pkg_share_description = FindPackageShare(package_name)
-  default_urdf_model_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
-
-  pkg_ros_rviz = FindPackageShare(rviz_package_name)
-  default_rviz_config_path = PathJoinSubstitution([pkg_share_description, rviz_config_folder, rviz_config_filename])
-
-  pkg_ros_gz_sim = FindPackageShare(gazebo_package_name)  
-  # pkg_ros_gz_sim = FindPackageShare(package='ros_gz_sim').find('ros_gz_sim')  #Depricated?
-  
-
-  default_urdf_model_path = os.path.join(pkg_share_description, urdf_filename)
-
-  default_ros_gz_bridge_config_file_path = os.path.join(pkg_share_description, ros_gz_bridge_config_file_path)
-  gazebo_launch_file_path = os.path.join(pkg_share_description, gazebo_launch_file_path)   
-  gazebo_models_path = os.path.join(pkg_share_description, gazebo_models_path)
-  default_world_path = os.path.join(pkg_share_description, world_file_path)
-  world_file_path = PathJoinSubstitution([gazebo_default_world_path, gazebo_world_file])
-  ros_gz_bridge_config_file_path = PathJoinSubstitution([gazebo_config_folder, gazebo_config_file]) 
-
-
-  # Instantiate DeclarLaunchArgument object variables.  Declaration done 
+  # Launch configuration variables specific to simulation
   headless = LaunchConfiguration('headless')
   robot_name = LaunchConfiguration('robot_name')
   rviz_config_file = LaunchConfiguration('rviz_config_file')
@@ -78,7 +48,6 @@ def generate_launch_description():
   use_simulator = LaunchConfiguration('use_simulator')
   world = LaunchConfiguration('world')
   
-
   # Set the default pose
   x = LaunchConfiguration('x')
   y = LaunchConfiguration('y')
@@ -87,7 +56,6 @@ def generate_launch_description():
   pitch = LaunchConfiguration('pitch')
   yaw = LaunchConfiguration('yaw')
   
-
   # Declare the launch arguments  
   declare_robot_name_cmd = DeclareLaunchArgument(
     name='robot_name',
@@ -131,7 +99,7 @@ def generate_launch_description():
 
   declare_world_cmd = DeclareLaunchArgument(
     name='world',
-    default_value=default_world_path,
+    default_value=world_path,
     description='Full path to the world model file to load')
 
   declare_x_cmd = DeclareLaunchArgument(
@@ -163,27 +131,13 @@ def generate_launch_description():
     name='yaw',
     default_value='0.0',
     description='yaw angle of initial orientation, radians')
-
-
+    
   # Specify the actions
 
   set_env_vars_resources = AppendEnvironmentVariable(
     'GZ_SIM_RESOURCE_PATH',
     gazebo_models_path)
-
-
-
-
-
-
-
-
-  ####################################################
-  # End config file changes                          #
-  # Start up functions follow                        #
-  # Do not make any changes below this line          #
-  ####################################################
-
+  
   # Start Gazebo server
   start_gazebo_server_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
