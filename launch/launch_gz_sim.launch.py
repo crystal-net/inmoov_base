@@ -10,6 +10,7 @@ from launch.substitutions import Command, LaunchConfiguration, PythonExpression,
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
+import xacro
 
 
 
@@ -39,32 +40,30 @@ def generate_launch_description():
   # package_name_gazebo = 'inmoov_base'
   gazebo_package_name = 'ros_gz_sim' #This allows changing from classic, ignition, or gz
   gazebo_launch_file_path = 'launch'
-  gazebo_models_path = 'models'
-  gazebo_config_file = 'ros_gz_bridge.yaml'
+  gazebo_models_folder = 'models'
+  gazebo_config_file = 'config/gz/ros_gz_bridge.yaml'
   gazebo_config_folder = 'config/gz'
   gazebo_world_file = 'empty.world'    # e.g. 'world/empty.world', 'world/house.world'
-  gazebo_default_world_path = 'worlds'
+  gazebo_world_folder = 'worlds'
   
 
   # Build paths to important files using the variables set above
   pkg_share_description = FindPackageShare(package_name)
-  default_urdf_model_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
+  default_urdf_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
 
   pkg_ros_rviz = FindPackageShare(rviz_package_name)
   default_rviz_config_path = PathJoinSubstitution([pkg_share_description, rviz_config_folder, rviz_config_filename])
 
-  pkg_ros_gz_sim = FindPackageShare(gazebo_package_name)  
   # pkg_ros_gz_sim = FindPackageShare(package='ros_gz_sim').find('ros_gz_sim')  #Depricated?
   
+  # pkg_ros_gz_sim = FindPackageShare(gazebo_package_name)  
+  pkg_ros_gz_sim = FindPackageShare(package='ros_gz_sim').find('ros_gz_sim')  
+  default_ros_gz_bridge_config_file_path = PathJoinSubstitution([pkg_share_description, gazebo_config_file])
+  default_gazebo_launch_file_path = PathJoinSubstitution([pkg_share_description, gazebo_launch_file_path])
+  default_gazebo_models_path = PathJoinSubstitution([pkg_share_description, gazebo_models_folder])
+  default_gazebo_world_path = PathJoinSubstitution([pkg_share_description, gazebo_world_folder, gazebo_world_file])
 
-  default_urdf_model_path = os.path.join(pkg_share_description, urdf_filename)
-
-  default_ros_gz_bridge_config_file_path = os.path.join(pkg_share_description, ros_gz_bridge_config_file_path)
-  gazebo_launch_file_path = os.path.join(pkg_share_description, gazebo_launch_file_path)   
-  gazebo_models_path = os.path.join(pkg_share_description, gazebo_models_path)
-  default_world_path = os.path.join(pkg_share_description, world_file_path)
-  world_file_path = PathJoinSubstitution([gazebo_default_world_path, gazebo_world_file])
-  ros_gz_bridge_config_file_path = PathJoinSubstitution([gazebo_config_folder, gazebo_config_file]) 
+  ros_gz_bridge_config_file_path = PathJoinSubstitution([gazebo_config_folder, gazebo_config_file])
 
 
   # Instantiate DeclarLaunchArgument object variables.  Declaration done 
@@ -106,10 +105,10 @@ def generate_launch_description():
 
   declare_urdf_model_path_cmd = DeclareLaunchArgument(
     name='urdf_model', 
-    default_value=default_urdf_model_path, 
+    default_value=default_urdf_path, 
     description='Absolute path to robot urdf file')
     
-  declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
+  declare_use_robot_state_pub_cmd = DeclareLaunchArgument( 
     name='use_robot_state_pub',
     default_value='True',
     description='Whether to start the robot state publisher')
@@ -121,7 +120,7 @@ def generate_launch_description():
     
   declare_use_sim_time_cmd = DeclareLaunchArgument(
     name='use_sim_time',
-    default_value='true',
+    default_value='True',
     description='Use simulation (Gazebo) clock if true')
 
   declare_use_simulator_cmd = DeclareLaunchArgument(
@@ -131,7 +130,7 @@ def generate_launch_description():
 
   declare_world_cmd = DeclareLaunchArgument(
     name='world',
-    default_value=default_world_path,
+    default_value=default_gazebo_world_path,
     description='Full path to the world model file to load')
 
   declare_x_cmd = DeclareLaunchArgument(
@@ -169,7 +168,7 @@ def generate_launch_description():
 
   set_env_vars_resources = AppendEnvironmentVariable(
     'GZ_SIM_RESOURCE_PATH',
-    gazebo_models_path)
+    default_gazebo_models_path)
 
 
 
@@ -199,7 +198,8 @@ def generate_launch_description():
     condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless])))
     
   # Subscribe to the joint states of the robot, and publish the 3D pose of each link.
-  robot_description_content = ParameterValue(Command(['xacro ', urdf_model]), value_type=str)
+  robot_description_content = ParameterValue(Command(['xacro ', default_urdf_path]), value_type=str)
+  # robot_description = xacro.parse(open(default_urdf_path)).to
   start_robot_state_publisher_cmd = Node(
     condition=IfCondition(use_robot_state_pub),
     package='robot_state_publisher',
@@ -210,14 +210,14 @@ def generate_launch_description():
       'use_sim_time': use_sim_time, 
       'robot_description': robot_description_content}])
 
-  # Launch RViz
-  start_rviz_cmd = Node(
-    condition=IfCondition(use_rviz),
-    package='rviz2',
-    executable='rviz2',
-    name='rviz2',
-    output='screen',
-    arguments=['-d', rviz_config_file])  
+  # # Launch RViz
+  # start_rviz_cmd = Node(
+  #   condition=IfCondition(use_rviz),
+  #   package='rviz2',
+  #   executable='rviz2',
+  #   name='rviz2',
+  #   output='screen',
+  #   arguments=['-d', rviz_config_file])  
     
   # Spawn the robot
   start_gazebo_ros_spawner_cmd = Node(
@@ -235,7 +235,7 @@ def generate_launch_description():
       ],
     output='screen')  
     
-  # Bridge ROS topics and Gazebo messages for establishing communication
+  # # Bridge ROS topics and Gazebo messages for establishing communication
   start_gazebo_ros_bridge_cmd = Node(
     package='ros_gz_bridge',
     executable='parameter_bridge',
@@ -271,7 +271,7 @@ def generate_launch_description():
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(start_gazebo_client_cmd)
   ld.add_action(start_robot_state_publisher_cmd)
-  ld.add_action(start_rviz_cmd)
+  # ld.add_action(start_rviz_cmd)
   
   ld.add_action(start_gazebo_ros_spawner_cmd)
   ld.add_action(start_gazebo_ros_bridge_cmd)
