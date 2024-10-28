@@ -13,9 +13,15 @@
   <!-- Specify the build tools that are needed to compile the package -->
   <depend>rclcpp</depend>
   <depend>rclpy</depend>
+
+  <!-- ROS2 components -->
   <depend>std_msgs</depend>
   <!-- <depend>ros2_control</depend> -->
 
+  <!-- Gazebo dependancies -->
+  <depend>gz_cmake_vendor</depend>
+  <depend>gz_utils_vendor</depend>
+  <depend>gz_math_vendor</depend>
 
   <!--Specifies dependencies that are only needed for testing -->
   <test_depend>ament_lint_auto</test_depend>

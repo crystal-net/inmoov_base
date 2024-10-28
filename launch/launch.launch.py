@@ -12,27 +12,54 @@ from launch_ros.substitutions import FindPackageShare
  
 def generate_launch_description():
  
-    # Define constants for filenames and subfolders below the parent package path   
+    #############################################
+    # Define constants for filenames and        #
+    # subfolders below the parent package path  #
+    #############################################
+       
+    # Package constants
     package_name = 'inmoov_base'
+    pkg_share_description = FindPackageShare(package_name)
+
+    # URDF
     urdf_folder = 'description'
     urdf_filename = 'robot.urdf.xacro'
+    default_urdf_model_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
+
+    # rViz2
     rviz_config_folder = 'config/rviz'
     rviz_config_filename = 'drive_bot.rviz'
-
- 
-    # Set paths to important files
-    pkg_share_description = FindPackageShare(package_name)
-    default_urdf_model_path = PathJoinSubstitution([pkg_share_description, urdf_folder, urdf_filename])
     default_rviz_config_path = PathJoinSubstitution([pkg_share_description, rviz_config_folder, rviz_config_filename])
+    rviz_config_file = LaunchConfiguration('rviz_config_file')
+    use_rviz = LaunchConfiguration('use_rviz')
+
+
+    ################################
+    # Set paths to important files #
+    ################################
  
     # Launch configuration variables specific to simulation
+    # joint_state_publisher_gui is used to manually publish joint states to the /joint_states
+    # topic which the robot_state_publisher will transform and send to /tf
+    # This tool should not be used as a way to control the robot.  It sends INSTANT states and can
+    # cause erratic behavior.  But it is nice for testing and showing what the current state is.
+    # If this value is true, a gui will be shown, if false a gui will not be shown but the
+    # the joint_state_publisher service will be running proving TF
     jsp_gui = LaunchConfiguration('jsp_gui')
-    rviz_config_file = LaunchConfiguration('rviz_config_file')
+    
+    # rViz2 is used to show what the current joint state should look like in relation to the hardware
+    
     urdf_model = LaunchConfiguration('urdf_model')
-    use_rviz = LaunchConfiguration('use_rviz')
     use_sim_time = LaunchConfiguration('use_sim_time')
- 
-    # Declare the launch arguments 
+
+
+    #####################################
+    # Declare the launch arguments      #
+    # These are arguements that are     #
+    # available at the command line     #
+    # use the --show-args argument      #
+    # to see each options from cmd-line #
+    #####################################   
     declare_jsp_gui_cmd = DeclareLaunchArgument(
         name='jsp_gui', 
         default_value='true', 
@@ -59,9 +86,13 @@ def generate_launch_description():
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
      
-    # Specify the actions
- 
-    # Publish the joint state values for the non-fixed joints in the URDF file.
+
+
+    ####################### 
+    # Specify the actions #
+    #######################
+    
+    # Publish the joint state values for the non-fixed joints to /tf file.
     start_joint_state_publisher_cmd = Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
@@ -97,7 +128,11 @@ def generate_launch_description():
         parameters=[{
         'use_sim_time': use_sim_time}])
    
-    # Create the launch description and populate
+ 
+ 
+    ##############################################
+    # Create the launch description and populate #
+    ##############################################
     ld = LaunchDescription()
  
     # Declare the launch options

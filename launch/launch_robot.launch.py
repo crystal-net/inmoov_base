@@ -126,7 +126,7 @@ def generate_launch_description():
     # Right now I am moving the sliders which it publishes and microros is reading those values
     # repeatedly and moving the servos.  However I think it is proper for ros2_control to publish
     # these values and then I won't need this later.
-    node_joint_state_publisher_gui = Node(
+    joint_state_publisher_gui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         output='screen',
@@ -238,14 +238,25 @@ def generate_launch_description():
 
 
 
+
+
+    # params = {'robot_description': 'robot_description'}
+
+    # node_joint_state_publisher = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     output='screen',
+    #     parameters=[params]
+    # )
+
     # Launch them all!
     return LaunchDescription([
         robot_state_publisher,
-        node_joint_state_publisher_gui,
+        joint_state_publisher_gui,
         
-        
+        # node_joint_state_publisher,
 
-        controller_manager,
+        # controller_manager,
         # delayed_controller_manager,
 
         # diff_drive_spawner,
