@@ -2,8 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
     <xacro:include filename="inertial_macros.xacro"/>
+    <xacro:include filename="robot_gazebo.xacro"/>
 
-
+    <!-- Pi Constant -->
+    <!-- <xacro:property name="pi" value="3.14159"/> -->
+    
     <xacro:property name="chassis_length" value="0.335"/>
     <xacro:property name="chassis_width" value="0.265"/>
     <xacro:property name="chassis_height" value="0.138"/>
@@ -40,30 +43,41 @@
     </material>
 
     <!-- BASE LINK -->
-
+    <!-- I believe this is what is linking to the world
+    but that is yet to come -->
+<!-- 
     <link name="base_link">
 
-    </link>
-
-    <!-- BASE_FOOTPRINT LINK -->
-<!-- 
-    <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="base_footprint"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
-
-    <link name="base_footprint">
     </link> -->
 
+    <!-- BASE_FOOTPRINT LINK -->
+    <!-- This was required for the newer version of gazebo.
+        It expects to see a "base_footprint" link that is attached
+        to some other link on our robot.  Base Link in our case.
+        It will be attached with a "base_footprint_joint".
+        I believe it is somewhat synonymous to the world link
+        that was commonly used in previous versions of gazebo
+    -->
+    <link name="base_footprint"></link>
+
+    <joint name="base_link_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="chassis"/>
+        <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+        <!-- I am going ot use the wheel link offsets from before -->
+        <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}"/>
+    </joint>
+
+ 
 
     <!-- CHASSIS LINK -->
-
-    <joint name="chassis_joint" type="fixed">
+    <!-- since changing to the base_footprint model for the -->
+    <!-- more recent versions of gazebo, we don't need this link -->
+    <!-- <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
         <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}"/>
-    </joint>
+    </joint> -->
 
     <link name="chassis">
         <visual>
@@ -73,20 +87,18 @@
             </geometry>
             <material name="orange"/>
         </visual>
+
         <collision>
             <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
             <geometry>
                 <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
             </geometry>
         </collision>
+
         <xacro:inertial_box mass="0.5" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}">
             <origin xyz="${chassis_length/2} 0 ${chassis_height/2}" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
-
-    <gazebo reference="chassis">
-        <material>Gazebo/Orange</material>
-    </gazebo>
 
 
 
@@ -116,11 +128,6 @@
         </xacro:inertial_cylinder>
     </link>
 
-    <gazebo reference="left_wheel">
-        <material>Gazebo/Blue</material>
-    </gazebo>
-
-
 
 
     <!-- RIGHT WHEEL LINK -->
@@ -132,7 +139,7 @@
         <axis xyz="0 0 -1"/>
     </joint>
 
-    <link name="right_wheel">
+    <link name="rigt_hwheel">
         <visual>
             <geometry>
                 <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
@@ -148,10 +155,6 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
-
-    <gazebo reference="right_wheel">
-        <material>Gazebo/Blue</material>
-    </gazebo>
 
 
     <!-- CASTER WHEEL LINK -->
@@ -180,11 +183,5 @@
         </xacro:inertial_sphere>
     </link>
 
-
-    <gazebo reference="caster_wheel">
-        <material>Gazebo/White</material>
-        <mu1 value="0.001"/>
-        <mu2 value="0.001"/>
-    </gazebo>
 
 </robot>

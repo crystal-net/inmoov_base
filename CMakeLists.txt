@@ -21,19 +21,22 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # Locate and configure packages required by the project.
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
 
-add_executable(talker src/minimal_cpp_publisher.cpp)
-add_executable(listener src/minimal_cpp_subscriber.cpp)
-ament_target_dependencies(talker rclcpp std_msgs)
-ament_target_dependencies(listener rclcpp std_msgs)
+
+
+# These are the directories that need to be copied into the compiled project
+install(
+  DIRECTORY launch description config worlds
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -46,15 +49,5 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-install(
-  DIRECTORY config description launch worlds
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(TARGETS
-  talker
-  listener
-  DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

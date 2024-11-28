@@ -19,7 +19,7 @@ def generate_launch_description():
   package_name_description = 'mycobot_description'
   package_name_gazebo = 'mycobot_gazebo'
 
-  default_robot_name = 'mycobot_280'
+  default_robot_name = 'inmoov'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models'
   rviz_config_file_path = 'rviz/mycobot_280_arduino_view_description.rviz'
@@ -46,6 +46,7 @@ def generate_launch_description():
   world = LaunchConfiguration('world')
   
   # Set the default pose
+  # (this is where in the world it will be placed.)
   x = LaunchConfiguration('x')
   y = LaunchConfiguration('y')
   z = LaunchConfiguration('z')

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <!-- ##################################################### -->
+    <!-- # Gazebo References                                   -->
+    <!-- # This file contains parameters for gazebo            -->
+    <!--  -->
+    <!-- ##################################################33# -->
+
+    <!-- Each link (fixed and non-fixed?) needs to have these  -->
+    <!-- parameters set                                        -->
+
+    <gazebo reference="chassis">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+
+    <gazebo reference="left_wheel">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+
+    <gazebo reference="right_wheel_joint">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+
+    <gazebo reference="caster_wheel">
+        <mu1>0.0002</mu1>
+        <mu2>0.0002</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+
+
+    <!-- ################################################## -->
+    <!-- #  Here we are setting up the plugins for gz      --> 
+    <!-- #  such as diffdrive controller and joint_states   -->
+    <!-- #  For gazebo                                      -->
+    <!-- ################################################## -->
+
+
+    <gazebo>
+        <!-- This plugin loads a controller for the diff_drive_system -->
+        <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+        
+            <!-- All the following parameters have to do with the plugin. -->
+            <!-- See *HERE* for documentation (get link)-->
+
+            <!-- wheels -->
+            <right_joint>right_wheel_joint</right_joint>
+            <left_joint>left_wheel_joint</left_joint>
+
+            <!-- kinematics -->
+            <wheel_separation>0.250</wheel_separation>
+            <wheel_diameter>0.250</wheel_diameter>
+
+            <!-- limits -->
+            <max_linear_acceleration>10</max_linear_acceleration>
+
+            <!-- topic, frames, and odometry -->
+            <!-- Note that we have a bsae_footprint child link reference -->
+            <!-- This is how we are telling Gazebo where to post the odometry -->
+            <!-- transform infomration -->
+            <topic>cmd_vel</topic>
+            <tf_topic>/tf</tf_topic>
+            <odom_topic>odom</odom_topic>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+            <odom_publisher_frequency>30</odom_publisher_frequency>
+        </plugin>
+
+        <!-- This plugin bridges the joint_state topic with gz  -->
+        <!-- It configures what joints should be bridged and    -->
+        <!-- what topic to listen on -->
+        <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+                <topic>joint_states</topic>
+                <joint_name>right_wheel_joint</joint_name>
+                <joint_name>left_wheel_joint</joint_name>
+        </plugin>
+
+    </gazebo>
+
+
+</robot>
