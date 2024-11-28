@@ -139,7 +139,7 @@
         <axis xyz="0 0 -1"/>
     </joint>
 
-    <link name="rigt_hwheel">
+    <link name="right_wheel">
         <visual>
             <geometry>
                 <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
