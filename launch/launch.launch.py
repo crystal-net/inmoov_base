@@ -60,6 +60,9 @@ def generate_launch_description():
     # use the --show-args argument      #
     # to see each options from cmd-line #
     #####################################   
+    
+    # *Note that there is an in/unless condition on
+    # the node launch for this arguement.
     declare_jsp_gui_cmd = DeclareLaunchArgument(
         name='jsp_gui', 
         default_value='true', 
@@ -143,9 +146,12 @@ def generate_launch_description():
     ld.add_action(declare_use_sim_time_cmd)
  
     # Add any actions
-    ld.add_action(start_joint_state_publisher_cmd)
-    ld.add_action(start_joint_state_publisher_gui_cmd)
     ld.add_action(start_robot_state_publisher_cmd)
+    
+    ld.add_action(start_joint_state_publisher_cmd)
+
+    ld.add_action(start_joint_state_publisher_gui_cmd)
+
     ld.add_action(start_rviz_cmd)
  
     return ld

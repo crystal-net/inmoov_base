@@ -1,12 +1,9 @@
-<mxfile host="Electron" modified="2024-06-24T03:06:17.018Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.1 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="0QNz8KAvllDKxoDZ-hMo" version="24.6.1" type="device">
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="3279" dy="1810" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1836" dy="699" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="_J6Cwn1X5KhBx10pQVit-129" value="Launch_robot.launch.py" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-823" y="170" width="797" height="370" as="geometry" />
-        </mxCell>
         <mxCell id="Kt66wAR78E_RaEtoUN4U-6" value="&lt;h1&gt;ros2_control Lifecycle&lt;/h1&gt;&lt;div&gt;This is the flow of execution for a ros2_control node.&lt;/div&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="110" y="50" width="650" height="120" as="geometry" />
         </mxCell>
@@ -14,7 +11,7 @@
           <mxGeometry x="960" y="50" width="530" height="120" as="geometry" />
         </mxCell>
         <mxCell id="Kt66wAR78E_RaEtoUN4U-16" value="&lt;h1&gt;Launch Configuration&lt;/h1&gt;&lt;p&gt;This is the very first stage from a command line.&lt;/p&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-530" y="30" width="190" height="120" as="geometry" />
+          <mxGeometry x="-558.25" y="330" width="190" height="120" as="geometry" />
         </mxCell>
         <mxCell id="Kt66wAR78E_RaEtoUN4U-17" value="Unconfigured" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="319" y="230" width="110" height="60" as="geometry" />
@@ -112,13 +109,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="22" value="Launch robot_state_publisher" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-563.5" y="227.5" width="130" height="55" as="geometry" />
+          <mxGeometry x="-591.75" y="527.5" width="130" height="55" as="geometry" />
         </mxCell>
         <mxCell id="23" value="Load URDF into /robot_description" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-710" y="970" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="24" value="Initeialize ControllerManager" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-140" y="580" width="120" height="60" as="geometry" />
+          <mxGeometry x="-168.25" y="880" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="25" value="Implement RobotHW in Hardware Abstraction Layer&lt;br&gt;(JointStateInterface)" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-260" y="990" width="180" height="60" as="geometry" />
@@ -154,7 +151,7 @@
           <mxGeometry x="-440" y="1920" width="190" height="140" as="geometry" />
         </mxCell>
         <mxCell id="89" value="Installation" style="shape=table;startSize=40;container=1;collapsible=0;childLayout=tableLayout;strokeColor=default;fontSize=16;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-680" y="740" width="573" height="186" as="geometry" />
+          <mxGeometry x="-786.5" y="3420" width="573" height="186" as="geometry" />
         </mxCell>
         <mxCell id="90" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" parent="89" vertex="1">
           <mxGeometry y="40" width="573" height="37" as="geometry" />
@@ -450,13 +447,7 @@
           <mxGeometry x="1070" y="839" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="cki8_oQQ6JSt1iZq9x34-131" value="cmd_vel topic" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-465" y="990" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="cki8_oQQ6JSt1iZq9x34-134" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.385;entryY=0.979;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="cki8_oQQ6JSt1iZq9x34-131" target="DOZ8shbyCuUHxcddwx-E-133" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="-30" y="730" as="sourcePoint" />
-            <mxPoint x="20" y="680" as="targetPoint" />
-          </mxGeometry>
+          <mxGeometry x="-720" y="750" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="fPOZ1dp4cMhDRdokMYRC-129" value="&lt;h1&gt;ROS2 Control for Gazebo&lt;/h1&gt;&lt;div&gt;&amp;nbsp;This is where we are going to setup how ros2_control talks to gazebo and how gazebo talks to res2_control&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;NOTE&lt;/b&gt;&amp;nbsp;gazebo_control and gazebo_ros2_control are two different things&lt;/div&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1005" y="1210" width="465" height="120" as="geometry" />
@@ -529,32 +520,32 @@
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-132" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Pk7snzVkNLMH_WmJ1Nt8-130" target="22" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-523.5000000000002" y="257.5000000000002" as="targetPoint" />
+            <mxPoint x="-551.7500000000002" y="557.5000000000002" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-130" value="Set parameters&lt;br&gt;-use_sim_time&lt;br&gt;- package_name&lt;br&gt;- Pkg_path&lt;br&gt;- xacro_file&lt;br&gt;- robot_description&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-743.5" y="200" width="120" height="110" as="geometry" />
+          <mxGeometry x="-771.75" y="500" width="120" height="110" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-139" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Pk7snzVkNLMH_WmJ1Nt8-133" target="Pk7snzVkNLMH_WmJ1Nt8-138" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-133" value="Launch joint_state_publisher_gui" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-193.5" y="225" width="150" height="60" as="geometry" />
+          <mxGeometry x="-221.75" y="525" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-136" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Pk7snzVkNLMH_WmJ1Nt8-134" target="Pk7snzVkNLMH_WmJ1Nt8-133" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-134" value="Start topics:&lt;br&gt;/joint_states&lt;br&gt;/robot_description&lt;br&gt;/tf&lt;br&gt;/tf_static" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-378.5" y="212.5" width="160" height="85" as="geometry" />
+          <mxGeometry x="-406.75" y="512.5" width="160" height="85" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-138" value="Initiaate /clock" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-178.5" y="365" width="120" height="60" as="geometry" />
+          <mxGeometry x="-206.75" y="665" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-140" value="Launch&lt;br&gt;Package: controller_manager&lt;br&gt;executable: ros2_control_node" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-433.5" y="365" width="185" height="55" as="geometry" />
+          <mxGeometry x="-461.75" y="665" width="185" height="55" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-141" value="Start Topic: /controller_manager/robot_description" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-468.5" y="452.5" width="255" height="60" as="geometry" />
+          <mxGeometry x="-496.75" y="752.5" width="255" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Pk7snzVkNLMH_WmJ1Nt8-142" value="&lt;h1&gt;URDF&lt;/h1&gt;&lt;p&gt;This is the basic structure of the robot.&amp;nbsp; This includes some ros2_control plugin definitions&lt;/p&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1050" y="2230" width="330" height="120" as="geometry" />
@@ -584,6 +575,60 @@
         </mxCell>
         <mxCell id="90UkCIJJJHxpXgxv-O5S-131" value="&lt;div&gt;- Broadcasters: Are controllers that don&#39;t control anything.&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp;Ex. joint_state_broadcaster only reports all the joint states to the /joint_states topic&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- Controllers: Actually send and receive commands&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Publishers: are the same things as broadcasters.&amp;nbsp; Just a different name.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- joint_state_controller&lt;/div&gt;&lt;div&gt;- joint_state_broadcaster&lt;/div&gt;&lt;div&gt;- robot_state_publisher&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="980" y="3550" width="570" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-129" value="Topic: /joint_states" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="114" y="4660" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-130" value="robot_state_publisher" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="554" y="4680" width="176" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-131" value="/rf and tf_static" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="40" y="4830" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-132" value="joint_state_publisher_gui posts instant joint values to /joint_states" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="114" y="4980" width="156" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-133" value="/cmd_vel" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="4890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-134" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="430" y="5100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-135" value="Topic: robot_description" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="590" y="4460" width="162.5" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-136" value=".xacro file" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="379" y="4460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-137" value=".urdf" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="370" y="4590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-139" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="620" y="4890" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-140" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="630" y="4900" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-141" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="640" y="4910" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-142" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="650" y="4920" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-144" value="Feedback from motor" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="4958" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-145" value="teleop_twist_joy" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="4820" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-146" value="/joy" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="4770" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="7TT3wSuFAmHMECkDppZa-147" value="linux_joy publishes joystick messages to /joy" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="4700" width="120" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="17JYS1yXUE1ZONdeisPn-129" value="&lt;h1&gt;Document Conventions&lt;/h1&gt;&lt;div&gt;- All objects will follow the UML used by RQT in order to keep things conceise and easy to translate&lt;/div&gt;&lt;div&gt;- Topics are listed as parralelagrams&lt;/div&gt;&lt;div&gt;- Nodes are squares&lt;/div&gt;&lt;div&gt;-&amp;nbsp;&lt;/div&gt;" style="text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-690" y="30" width="570" height="160" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
