@@ -33,6 +33,12 @@ def generate_launch_description():
     rviz_config_file = LaunchConfiguration('rviz_config_file')
     use_rviz = LaunchConfiguration('use_rviz')
 
+    # MicroROS
+    use_mra = LaunchConfiguration('use_mra')
+
+    # Joystick and teleop
+    
+
 
     ################################
     # Set paths to important files #
@@ -61,7 +67,7 @@ def generate_launch_description():
     # to see each options from cmd-line #
     #####################################   
     
-    # *Note that there is an in/unless condition on
+    # *Note that there is an if/unless condition on
     # the node launch for this arguement.
     declare_jsp_gui_cmd = DeclareLaunchArgument(
         name='jsp_gui', 
@@ -84,6 +90,12 @@ def generate_launch_description():
         default_value='true',
         description='Whether to start RVIZ')
  
+    declare_use_mra_cmd = DeclareLaunchArgument(
+        name='use_mra',
+        default_value='true',
+        description='Whether to start MicroROS')
+
+
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         name='use_sim_time',
         default_value='false',
@@ -132,6 +144,16 @@ def generate_launch_description():
         'use_sim_time': use_sim_time}])
    
  
+    start_mra_cmd = Node(
+        condition=IfCondition(use_mra),
+        output='screen',
+        package='micro_ros_agent',
+        executable='micro_ros_agent',
+        name='micro_ros_agent',
+        # arguments=["udp4", "-p", "8888", "-v6"]
+        arguments=["serial", "--dev", "/dev/ttyACM0"])
+
+
  
     ##############################################
     # Create the launch description and populate #
@@ -143,15 +165,15 @@ def generate_launch_description():
     ld.add_action(declare_rviz_config_file_cmd)
     ld.add_action(declare_urdf_model_path_cmd)
     ld.add_action(declare_use_rviz_cmd)
+    ld.add_action(declare_use_mra_cmd)
     ld.add_action(declare_use_sim_time_cmd)
  
     # Add any actions
     ld.add_action(start_robot_state_publisher_cmd)
-    
     ld.add_action(start_joint_state_publisher_cmd)
-
     ld.add_action(start_joint_state_publisher_gui_cmd)
-
     ld.add_action(start_rviz_cmd)
+    ld.add_action(start_mra_cmd)
+    
  
     return ld

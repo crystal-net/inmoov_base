@@ -30,6 +30,12 @@ ros2 topic pub --once /cmd_vel geometry_msgs/Twist "{linear: {x: 0.5}, angular: 
 ros2 topic pub /joint_states sensor_msgs/JointState "{name: ['joint1', 'joint2'], position: [1.0, 2.0], velocity: [0.5, 0.5], effort: [1.0, 1.5]}"
 
 
+
+ros2 topic pub /cmd_vel geometry_msgs/msg/Twist
+
+
+
+
 //			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 //			printf("Wheel Speeds: %f,  %f \n",left_speed,right_speed);
 
