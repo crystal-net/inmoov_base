@@ -12,9 +12,14 @@ Commands
 
 launch code . from the ws base directory where the build/install/log are
 
-ros2 launch inmoov_base launch.launch.py
+##### Launch Commands In Order #####
+
+
+ros2 launch inmoov_base bringup.launch.py
 
 ros2 launch inmoov_base joystick.launch.py
+
+ros2 run controller_manager ros2_control_node
 
 ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066FFF515250898367102831-if02
 
@@ -25,6 +30,7 @@ ros2 control interfaces etc.
 Joystick
 ros2 run teleop-twist_joy
 
+ros2 launch inmoov_base launch_gz_sim_only.launch.py
 
 ros2 topic pub --once /cmd_vel geometry_msgs/Twist "{linear: {x: 0.5}, angular: {z: 0.1}}"
 ros2 topic pub /joint_states sensor_msgs/JointState "{name: ['joint1', 'joint2'], position: [1.0, 2.0], velocity: [0.5, 0.5], effort: [1.0, 1.5]}"

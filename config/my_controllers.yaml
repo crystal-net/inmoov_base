@@ -3,21 +3,40 @@ controller_manager:
     update_rate: 100
     # use_sim_time: true
 
-    diff_cont:
+    # I believe that the DiffDriveController refered to here
+    # is part of the ROS2_Control package.  This needs confirmation
+    diff_controller:
       type: diff_drive_controller/DiffDriveController
 
-    joint_broad:
+    # It has been noted that this is a controller that doesn't
+    # control anything.  # robot_state_publisher needs the 
+    # /joint_states topic to be publishes and this controller
+    # will accomplish this. (I think)
+    # Its also been noted that this might not be needed for this
+    # type of robot but I don't know why.  Just folling instructions. 
+    joint_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+
 
 diff_cont:
   ros__parameters:
 
     publish_rate: 50.0
 
+    # base_frame_id is defined in our URDF file and must match here
+    # I think this is where transforms are calculated from
     base_frame_id: base_link
 
+    # In the hardware interface in the ros2_control.xacro file
+    # we defined the left and right wheel joints and now we
+    # are doing the same here for the controller
+    # so the hardware interface and gazebo controller plugin match
     left_wheel_names: ['left_wheel_joint']
     right_wheel_names: ['right_wheel_joint']
+    
+    # this values are also in relation to what has already
+    # been defined in the URDF
     wheel_separation: 0.297
     wheel_radius: 0.033
 

@@ -4,8 +4,8 @@
     <!-- ##################################################### -->
     <!-- # Gazebo References                                   -->
     <!-- # This file contains parameters for gazebo            -->
-    <!--  -->
-    <!-- ##################################################33# -->
+    <!-- # This file does not load ROS2_Control                -->
+    <!-- ##################################################### -->
 
     <!-- Each link (fixed and non-fixed?) needs to have these  -->
     <!-- parameters set                                        -->

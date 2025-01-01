@@ -1,25 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- We are here from robot.urdf.xacro because use_ros2_control was: true -->
-    <!-- sim_mode is defined in robot.urdf.xacro and will load a real robot driver -->
-    <!-- if it is false and the GZ Sim plugin if true -->
-
     <xacro:unless value="$(arg sim_mode)">
-        <!-- name here is up to us.  The system doesn't use it -->
-        <!-- Make name something descriptive of the type -->
         <ros2_control name="RealRobot" type="system">
             <hardware>
-                <!-- This plugin is our hardware interface -->
-                <!-- The following param tags are directly -->
-                <!-- related to the plugin.  They will not -->
-                <!-- be the same for all plugins -->
-                <!-- Also note that when NOT using gazebo  -->
-                <!-- and its plugins, we need to start another -->
-                <!-- controller manager via the following command -->
-                <!-- or through a launch files -->
-                <!-- ros2 run controller_manager ros2_control_node -->
-                <!-- Also note we might be able to use mock hardware here -->
                 <plugin>diffdrive_arduino/DiffDriveArduino</plugin>
                 <param name="left_wheel_name">left_wheel_joint</param>
                 <param name="right_wheel_name">right_wheel_joint</param>
@@ -29,10 +13,6 @@
                 <param name="timeout">1000</param>
                 <param name="enc_counts_per_rev">3436</param>
             </hardware>
-            <!-- The joint tags tell the plugin we just setup -->
-            <!-- which joints it will be controlling -->
-            <!-- The joint name must be the same as in the URDF -->
-            <!-- And then we list all the interfaces; command, state, etc -->
             <joint name="left_wheel_joint">
                 <command_interface name="velocity">
                     <param name="min">-10</param>
@@ -54,13 +34,11 @@
 
 
     <!-- Below, If we choose to run the sim, will load the -->
-    <!-- ROS2_Control plugins for Gazebo.      -->
+    <!-- ROS2_Control plugins for Gazebo. 
+     -->
 
     <xacro:if value="$(arg sim_mode)">
-    <!-- Again, name here is just a description and doesn't affect anything -->
         <ros2_control name="GazeboSystem" type="system">
-            <!-- At this point we are still setting up ROS2_CONTROL -->
-            <!-- The plugin below is for the ROS2_CONTROL side (controller manager?) -->
             <hardware>
                 <plugin>gazebo_ros2_control/GazeboSystem</plugin>
             </hardware>
@@ -83,22 +61,10 @@
         </ros2_control>
     </xacro:if>
 
-
-    <!-- At this point we are done with ROS2_CONTROL. -->
-    <!-- Now we need to tell gazebo that it will be receiving -->
-    <!-- state and command interfaces from ROS2_CONTROL -->
-    <!-- This gazebo plugin sets up a few things in gazebo, -->
-    <!-- and most importantly in this context, it provides -->
-    <!-- its own controller manager.  This is why when we -->
-    <!-- are not using gazebo we need to start another node -->
-    <!-- as is stated in the notes above -->
-    <!-- The plugin already knows where to get the URDF or /robot_description -->
-    <!-- but we also need to give it controller information -->
-    <!-- contained in the yaml files  (read them for more info) -->
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
             <parameters>$(find inmoov_base)/config/my_controllers.yaml</parameters>
-            <!-- <parameters>$(find inmoov_base)/config/gaz_ros2_ctl_use_sim.yaml</parameters> -->
+            <parameters>$(find inmoov_base)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
         </plugin>
     </gazebo>
 

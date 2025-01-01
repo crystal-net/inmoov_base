@@ -16,8 +16,8 @@ import xacro
 def generate_launch_description():
 
   # Constants for paths to different files and folders
-  package_name_description = 'mycobot_description'
-  package_name_gazebo = 'mycobot_gazebo'
+  package_name_description = 'inmoov_base'
+  package_name_gazebo = 'inmoov_base'
 
   default_robot_name = 'inmoov'
   gazebo_launch_file_path = 'launch'

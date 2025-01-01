@@ -25,7 +25,7 @@ def generate_launch_description():
          )
     
     # teleop_node = Node(
-    #             package='teleop_twist_joy',
+    #             packa     ge='teleop_twist_joy',
     #             executable='teleop_node',
     #             name='teleop_node',
     #             parameters=[joy_params, {'use_sim_time': use_sim_time}],
@@ -33,7 +33,11 @@ def generate_launch_description():
     #         )
         
 
-
+    Node(
+        package='controller_manager',
+        executable='ros2_control_node',
+        parameters=[{'robot_control.yaml'}],
+    ),
 
 
 
