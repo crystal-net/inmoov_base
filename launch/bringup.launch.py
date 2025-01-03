@@ -1,7 +1,19 @@
 # Author: Paradox
 # Date: June 1, 2024
-# Description: Display the robotic arm with RViz
+# Description: Bringup launch file for the InMoov robot platform
  
+
+# This is our all-in-one launch file.  It will launch:
+#   robot_state_publisher
+#   joint_state_publisher (or GUI)
+#   ros2_controller
+#   micro_ros_agent (eventually)
+
+
+# TODO: Update the launcher to be more event driven.  This will require a bunch more import packages
+# See here for more info:  https://docs.ros.org/en/rolling/Tutorials/Intermediate/Launch/Using-Event-Handlers.html
+
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition, UnlessCondition
@@ -12,13 +24,30 @@ from launch_ros.substitutions import FindPackageShare
  
 def generate_launch_description():
  
-    #############################################
-    # Define constants for filenames and        #
-    # subfolders below the parent package path  #
-    #############################################
-       
+    ########################################################
+    # Define constants for filenames and                   #
+    # subfolders below the parent package path             #
+    ########################################################
+
+    # First we are going to set a bunch of environment 
+    # variables.  We are going to set them immediately at 
+    # the top of the launch file to make it easier to find
+    # and change when we build a new project or we want to 
+    # change something.
+
+
+
+    # package_name: is to be used for string replacement and it needs to be the same as
+    # the build directory in.  **See the standard package directory structure for details
+
     # Package constants
+    # This variable will be used to build file paths later in the script.
     package_name = 'inmoov_base'
+    
+    # Find package share looks for the path to the cmake built share directory
+    # I don't know if this is better or having it go to the app.  This will be something
+    # to determine later in the deployment process I think.
+    # So for our case it will be in ./install/inmoov_base/share/inmoov_base
     pkg_share_description = FindPackageShare(package_name)
 
     # URDF
@@ -38,6 +67,8 @@ def generate_launch_description():
 
     # Joystick and teleop
     
+    # Also possibly joint_state_broadcaster to put the states into /robot_description
+    #   sudo apt install ros-$ROS_DISTRO-joint_state_broadcaster
 
 
     ################################
@@ -53,8 +84,8 @@ def generate_launch_description():
     # the joint_state_publisher service will be running proving TF
     jsp_gui = LaunchConfiguration('jsp_gui')
     
-    # rViz2 is used to show what the current joint state should look like in relation to the hardware
     
+    # rViz2 is used to show what the current joint state should look like in relation to the hardware  
     urdf_model = LaunchConfiguration('urdf_model')
     use_sim_time = LaunchConfiguration('use_sim_time')
 
@@ -66,7 +97,12 @@ def generate_launch_description():
     # use the --show-args argument      #
     # to see each options from cmd-line #
     #####################################   
-    
+
+    declare_urdf_model_path_cmd = DeclareLaunchArgument(
+        name='urdf_model', 
+        default_value=default_urdf_model_path, 
+        description='Absolute path to robot urdf file')
+
     # *Note that there is an if/unless condition on
     # the node launch for this arguement.
     declare_jsp_gui_cmd = DeclareLaunchArgument(
@@ -80,11 +116,6 @@ def generate_launch_description():
         default_value=default_rviz_config_path,
         description='Full path to the RVIZ config file to use')
  
-    declare_urdf_model_path_cmd = DeclareLaunchArgument(
-        name='urdf_model', 
-        default_value=default_urdf_model_path, 
-        description='Absolute path to robot urdf file')
- 
     declare_use_rviz_cmd = DeclareLaunchArgument(
         name='use_rviz',
         default_value='true',
@@ -94,7 +125,6 @@ def generate_launch_description():
         name='use_mra',
         default_value='true',
         description='Whether to start MicroROS')
-
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         name='use_sim_time',
@@ -144,6 +174,7 @@ def generate_launch_description():
         'use_sim_time': use_sim_time}])
    
  
+    # Micro-ROS node description
     start_mra_cmd = Node(
         condition=IfCondition(use_mra),
         output='screen',
@@ -169,11 +200,12 @@ def generate_launch_description():
     ld.add_action(declare_use_sim_time_cmd)
  
     # Add any actions
-    ld.add_action(start_robot_state_publisher_cmd)
-    ld.add_action(start_joint_state_publisher_cmd)
-    ld.add_action(start_joint_state_publisher_gui_cmd)
-    ld.add_action(start_rviz_cmd)
-    ld.add_action(start_mra_cmd)
+    ld.add_action(start_robot_state_publisher_cmd)      
+    ld.add_action(start_joint_state_publisher_cmd)      #Launch either this or the GUI
+    ld.add_action(start_joint_state_publisher_gui_cmd)  #Lauch either this or the service
     
+    
+    ld.add_action(start_mra_cmd)        # Micro-ROS
+    ld.add_action(start_rviz_cmd)       # We do this last so it has all the information to display correctly
  
     return ld

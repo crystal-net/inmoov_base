@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="inmoov">
+
 <ros2_control name="MockHardwareSystem" type="system">
   <hardware>
     <plugin>mock_components/GenericSystem</plugin>

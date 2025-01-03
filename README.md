@@ -104,3 +104,8 @@ HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		"/joint_states");
 
 /****************************************************************/
+
+
+
+
+    # pdb.set_trace()  #Python debug break if needed

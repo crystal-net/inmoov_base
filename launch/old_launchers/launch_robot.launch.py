@@ -2,18 +2,13 @@
 # For which parameters are also important: http://design.ros2.org/articles/ros_parameters.html
 # And node lifecycle: http://design.ros2.org/articles/node_lifecycle.html
 
-# This is our all-in-one launch file.  It will launch:
-#   robot_state_publisher
-#   joint_state_publisher
-#   ros2_controller
-#   micro_ros_agent (eventually)
 
 # At this point in the loading process you will need to have joint_state_publisher_gui installed
 #   Note that joint_state_publisher also gets installed but we won't use it.  Not directly anyways.
-#   sudo apt install ros-humble-joint-state-publisher-gui
+#   sudo apt install ros-$ROS_DISTRO-joint-state-publisher-gui
 
 # Also possibly joint_state_broadcaster to put the states into /robot_description
-#   sudo apt install ros-humble-joint_state_broadcaster
+#   sudo apt install ros-$ROS_DISTRO-joint_state_broadcaster
 
 
 
