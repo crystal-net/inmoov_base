@@ -6,11 +6,11 @@ It is recommended that you keep the repo/package name the same, but if you do ch
 
 Note that each directory currently has at least one file in it to ensure that git tracks the files (and, consequently, that a fresh clone has direcctories present for CMake to find). These example files can be removed if required (and the directories can be removed if `CMakeLists.txt` is adjusted accordingly).
 
-Change Log October 7, 2024
+Change Log October 7, 2025
 
 Commands
 
-launch code . from the ws base directory where the build/install/log are
+launch code . from the directory where youve downloaded all the modules
 
 ##### Launch Commands In Order #####
 
